@@ -27,6 +27,7 @@ namespace OfficeFlow.Models
         public int Office_id { get; set; }
         public Office Office { get; set; } = null!;
         public List<Reservation> Reservations { get; set; } = new();
+        public List<ReservationArchive> ReservationArchives { get; set; } = new();
         public List<Amenity> Amenities { get; set; } = new();
     }
 }

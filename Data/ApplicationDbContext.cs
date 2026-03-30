@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
@@ -7,10 +9,6 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
-        // AUTOMATYKA: Ładuje wszystkie klasy z folderu Configurations/
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(HRDbContext).Assembly);
-
-        // SEED: Dodaje dane testowe
-        modelBuilder.Seed();
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

@@ -8,11 +8,14 @@ using OfficeFlow.Models;
 
 namespace OfficeFlow.Data.Configurations
 {
-    public class UsersConfiguration : IEntityTypeConfiguration<Users> 
+    public class UsersConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Users> builder )
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasOne(u => u.)
+            builder.Property(u => u.First_name).IsRequired().HasMaxLength(50);
+            builder.Property(u => u.Last_name).IsRequired().HasMaxLength(50);
+            builder.HasIndex(u => u.Email).IsUnique();
+            builder.Property(u => u.Email).IsRequired().HasMaxLength(50);
         }
     }
 }
