@@ -16,7 +16,7 @@ namespace OfficeFlow.Data.Configurations
             builder.Property(oa => oa.AddressLine2).IsRequired().HasMaxLength(50);
             builder.Property(oa => oa.City).IsRequired().HasMaxLength(50);
             builder.Property(oa => oa.Town).IsRequired().HasMaxLength(50);
-            builder.Property(oa => oa.PostalCode).IsRequired().HasMaxLength(5);
+            builder.Property(oa => oa.PostalCode).IsRequired().HasMaxLength(10);
             builder.HasIndex(oa => oa.OfficeId).IsUnique();
 
             builder
