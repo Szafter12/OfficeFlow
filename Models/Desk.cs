@@ -2,22 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OfficeFlow.Enums;
 
 namespace OfficeFlow.Models
 {
-    public enum DeskType
-    {
-        Desk,
-        ConferenceRoom,
-    }
-
-    public enum Status
-    {
-        Active,
-        Taken,
-        Closed,
-    }
-
     public class Desk
     {
         public int Id { get; set; }

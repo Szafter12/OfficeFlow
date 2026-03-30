@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using OfficeFlow.Enums;
 using OfficeFlow.Models;
 
 namespace OfficeFlow.Data
