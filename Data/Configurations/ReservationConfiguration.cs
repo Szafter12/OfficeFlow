@@ -14,6 +14,17 @@ namespace OfficeFlow.Data.Configurations
         {
             builder.Property(r => r.Start_date).IsRequired();
             builder.Property(r => r.End_date).IsRequired();
+            builder
+                .Property(r => r.Created_at)
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Property(r => r.Updated_at)
+                .HasColumnType("timestamp with time zone")
+                .HasDefaultValueSql("now()")
+                .ValueGeneratedOnAddOrUpdate();
 
             builder
                 .HasOne(r => r.User)
