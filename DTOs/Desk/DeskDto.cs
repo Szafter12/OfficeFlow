@@ -6,5 +6,5 @@ using OfficeFlow.Enums;
 
 namespace OfficeFlow.DTOs.Desk
 {
-    public record DeskDto(int Id, DeskType Type, decimal Price, Status Status, int OfficeId);
+    public record DeskDto(int Id, DeskType Type, decimal Price, DeskStatus Status, int OfficeId);
 }

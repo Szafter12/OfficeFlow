@@ -95,68 +95,110 @@ namespace OfficeFlow.Data
                     }
                 );
             modelBuilder
-                .Entity<Desk>()
-                .HasData(
-                    new Desk
-                    {
-                        Id = 1,
-                        Office_id = 1,
-                        Price = 50.00m,
-                        Type = DeskType.Desk,
-                        Status = Status.Active,
-                    },
-                    new Desk
-                    {
-                        Id = 2,
-                        Office_id = 1,
-                        Price = 100.00m,
-                        Type = DeskType.ConferenceRoom,
-                        Status = Status.Active,
-                    },
-                    new Desk
-                    {
-                        Id = 3,
-                        Office_id = 2,
-                        Price = 60.00m,
-                        Type = DeskType.Desk,
-                        Status = Status.Active,
-                    }
-                );
-            modelBuilder
                 .Entity("AmenityDesk")
                 .HasData(
                     new { AmenitiesId = 1, DesksId = 1 },
                     new { AmenitiesId = 2, DesksId = 1 },
                     new { AmenitiesId = 1, DesksId = 2 }
                 );
-            modelBuilder
-                .Entity<Reservation>()
-                .HasData(
+            var desks = new List<Desk>
+            {
+                new Desk
+                {
+                    Id = 1,
+                    Office_id = 1,
+                    Price = 50.00m,
+                    Type = DeskType.Desk,
+                    Status = DeskStatus.Available,
+                },
+                new Desk
+                {
+                    Id = 2,
+                    Office_id = 1,
+                    Price = 100.00m,
+                    Type = DeskType.ConferenceRoom,
+                    Status = DeskStatus.Maintenance,
+                },
+                new Desk
+                {
+                    Id = 3,
+                    Office_id = 2,
+                    Price = 60.00m,
+                    Type = DeskType.Desk,
+                    Status = DeskStatus.Retired,
+                },
+            };
+            for (int i = 4; i <= 50; i++)
+            {
+                desks.Add(
+                    new Desk
+                    {
+                        Id = i,
+                        Office_id = (i % 2) + 1,
+                        Price = 40.00m + (i % 10),
+                        Type = i % 5 == 0 ? DeskType.ConferenceRoom : DeskType.Desk,
+                        Status = DeskStatus.Available,
+                    }
+                );
+            }
+
+            modelBuilder.Entity<Desk>().HasData(desks);
+
+            var reservations = new List<Reservation>
+            {
+                new Reservation
+                {
+                    Id = 1,
+                    User_id = 1,
+                    Desk_id = 1,
+                    reservationStatus = ReservationStatus.Accepted,
+                    Start_date = new DateTime(2026, 05, 20, 10, 0, 0, DateTimeKind.Utc),
+                    End_date = new DateTime(2026, 05, 20, 18, 0, 0, DateTimeKind.Utc),
+                    Created_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc),
+                    Updated_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc),
+                },
+            };
+
+            var seedDate = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc);
+
+            var random = new Random(42);
+            for (int i = 2; i <= 101; i++)
+            {
+                var dayOffset = random.Next(1, 30);
+                var startHour = random.Next(8, 11);
+
+                reservations.Add(
                     new Reservation
                     {
-                        Id = 1,
-                        User_id = 1,
-                        Desk_id = 1,
-                        Start_date = new DateTime(2026, 05, 20, 10, 0, 0, DateTimeKind.Utc),
-                        End_date = new DateTime(2026, 05, 20, 18, 0, 0, DateTimeKind.Utc),
-                        Created_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc), // Dodaj to!
-                        Updated_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc),
+                        Id = i,
+                        User_id = (i % 2) + 1,
+                        Desk_id = (i % 48) + 1,
+                        reservationStatus = ReservationStatus.Accepted,
+                        Start_date = new DateTime(
+                            2026,
+                            06,
+                            01,
+                            startHour,
+                            0,
+                            0,
+                            DateTimeKind.Utc
+                        ).AddDays(dayOffset),
+                        End_date = new DateTime(
+                            2026,
+                            06,
+                            01,
+                            startHour + 6,
+                            0,
+                            0,
+                            DateTimeKind.Utc
+                        ).AddDays(dayOffset),
+                        Created_at = seedDate,
+                        Updated_at = seedDate,
                     }
                 );
-            modelBuilder
-                .Entity<ReservationArchive>()
-                .HasData(
-                    new ReservationArchive
-                    {
-                        Id = 1,
-                        User_id = 2,
-                        Desk_id = 3,
-                        Start_date = new DateTime(2026, 05, 20, 10, 0, 0, DateTimeKind.Utc),
-                        End_date = new DateTime(2026, 05, 20, 18, 0, 0, DateTimeKind.Utc),
-                        Created_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc),
-                        Updated_at = new DateTime(2026, 03, 31, 12, 0, 0, DateTimeKind.Utc),
-                    }
-                );
+            }
+
+            modelBuilder.Entity<Reservation>().HasData(reservations);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace OfficeFlow.Models
         public int Id { get; set; }
         public DeskType Type { get; set; } = DeskType.Desk;
         public Decimal Price { get; set; }
-        public Status Status { get; set; } = Status.Active;
+        public DeskStatus Status { get; set; } = DeskStatus.Available;
         public int Office_id { get; set; }
         public Office Office { get; set; } = null!;
         public List<Reservation> Reservations { get; set; } = new();

@@ -36,7 +36,7 @@ namespace OfficeFlow.Services
             return dto with { Id = desk.Id };
         }
 
-        public async Task UpdateStatusAsync(int id, Status status)
+        public async Task UpdateStatusAsync(int id, DeskStatus status)
         {
             var desk = await _context.Desks.FindAsync(id) ?? throw new KeyNotFoundException();
             desk.Status = status;

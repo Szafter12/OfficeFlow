@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using OfficeFlow.Enums;
 
 namespace OfficeFlow.Models
 {
@@ -12,6 +13,7 @@ namespace OfficeFlow.Models
         public int Desk_id { get; set; }
         public DateTime Start_date { get; set; }
         public DateTime End_date { get; set; }
+        public ReservationStatus reservationStatus { get; set; }
         public DateTime Created_at { get; set; } = DateTime.UtcNow;
         public DateTime Updated_at { get; set; } = DateTime.UtcNow;
         public User User { get; set; } = null!;

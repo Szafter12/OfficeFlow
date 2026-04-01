@@ -11,7 +11,7 @@ namespace OfficeFlow.Interfaces
     {
         Task<IEnumerable<DeskDto>> GetAllByOfficeAsync(int officeId);
         Task<DeskDto> CreateAsync(DeskDto dto);
-        Task UpdateStatusAsync(int id, Status status);
+        Task UpdateStatusAsync(int id, DeskStatus status);
         Task DeleteAsync(int id);
     }
 }
