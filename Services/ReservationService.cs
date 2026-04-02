@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OfficeFlow.DTOs.Reservation;
 using OfficeFlow.Enums;
+using OfficeFlow.Exceptions;
 using OfficeFlow.Interfaces;
 using OfficeFlow.Models;
 
@@ -25,7 +26,7 @@ namespace OfficeFlow.Services
 
             if (!isAvailable)
             {
-                throw new Exception("Desk is already taken");
+                throw new DeskUnavailableException();
             }
 
             var newReservation = new Reservation

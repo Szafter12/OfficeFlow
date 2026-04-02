@@ -20,6 +20,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IOfficeService, OfficeService>();
 builder.Services.AddScoped<IDeskService, DeskService>();
 builder.Services.AddScoped<IAmenityService, AmenityService>();
+builder.Services.AddScoped<IReservationService, ReservationService>();
 
 var app = builder.Build();
 

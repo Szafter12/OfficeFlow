@@ -15,7 +15,7 @@ namespace OfficeFlow.DTOs.Reservation
         ReservationStatus reservationStatus,
         DateTime startDate,
         DateTime endDate,
-        UserDto user,
-        DeskDto desk
+        UserDto? user,
+        DeskDto? desk
     );
 }

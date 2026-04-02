@@ -3,6 +3,7 @@ using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using OfficeFlow.Exceptions;
 
 namespace OfficeFlow.Middlewares
 {
@@ -35,6 +36,7 @@ namespace OfficeFlow.Middlewares
                 ArgumentException => (int)HttpStatusCode.BadRequest,
                 KeyNotFoundException => (int)HttpStatusCode.NotFound,
                 UnauthorizedAccessException => (int)HttpStatusCode.Forbidden,
+                DeskUnavailableException => (int)HttpStatusCode.Conflict,
                 _ => (int)HttpStatusCode.InternalServerError,
             };
             context.Response.ContentType = "application/json";
