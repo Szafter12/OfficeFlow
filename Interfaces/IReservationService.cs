@@ -9,6 +9,5 @@ namespace OfficeFlow.Interfaces
     public interface IReservationService
     {
         Task<ReservationDto> CreateReservationAsync(ReservationDto dto);
-        Task<bool> IsDeskAvailable(int deskId);
     }
 }

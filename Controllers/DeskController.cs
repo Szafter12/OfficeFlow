@@ -38,7 +38,7 @@ namespace OfficeFlow.Controllers
             );
         }
 
-        [HttpPatch("{id}")]
+        [HttpPatch("{id:int}")]
         public async Task<IActionResult> UpdateStatus(int id, [FromBody] DeskStatus status)
         {
             try
@@ -52,7 +52,7 @@ namespace OfficeFlow.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete(int id)
         {
             try

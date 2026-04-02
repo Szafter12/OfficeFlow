@@ -39,7 +39,9 @@ namespace OfficeFlow.Services
             _context.Reservations.Add(newReservation);
             await _context.SaveChangesAsync();
 
-            dto.reservationId = newReservation.Id;
+            var updateDto = dto with { reservationId = newReservation.Id };
+
+            return updateDto;
         }
 
         private async Task<bool> IsDeskAvailable(int deskId, DateTime start, DateTime end)
