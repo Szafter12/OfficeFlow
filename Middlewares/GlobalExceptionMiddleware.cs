@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -33,6 +34,7 @@ namespace OfficeFlow.Middlewares
         {
             context.Response.StatusCode = exception switch
             {
+                ValidationException => (int)HttpStatusCode.BadRequest,
                 ArgumentException => (int)HttpStatusCode.BadRequest,
                 KeyNotFoundException => (int)HttpStatusCode.NotFound,
                 UnauthorizedAccessException => (int)HttpStatusCode.Forbidden,
