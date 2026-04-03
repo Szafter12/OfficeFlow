@@ -8,11 +8,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace OfficeFlow.Migrations
+namespace OfficeFlow.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260401192324_NewMigration")]
-    partial class NewMigration
+    [Migration("20260402230726_initMigration")]
+    partial class initMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1926,7 +1926,7 @@ namespace OfficeFlow.Migrations
             modelBuilder.Entity("OfficeFlow.Models.ReservationArchive", b =>
                 {
                     b.HasOne("OfficeFlow.Models.Desk", "Desk")
-                        .WithMany("ReservationArchives")
+                        .WithMany()
                         .HasForeignKey("DeskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1944,8 +1944,6 @@ namespace OfficeFlow.Migrations
 
             modelBuilder.Entity("OfficeFlow.Models.Desk", b =>
                 {
-                    b.Navigation("ReservationArchives");
-
                     b.Navigation("Reservations");
                 });
 

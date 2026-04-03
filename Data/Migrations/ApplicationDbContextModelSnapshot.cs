@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace OfficeFlow.Migrations
+namespace OfficeFlow.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -1923,7 +1923,7 @@ namespace OfficeFlow.Migrations
             modelBuilder.Entity("OfficeFlow.Models.ReservationArchive", b =>
                 {
                     b.HasOne("OfficeFlow.Models.Desk", "Desk")
-                        .WithMany("ReservationArchives")
+                        .WithMany()
                         .HasForeignKey("DeskId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1941,8 +1941,6 @@ namespace OfficeFlow.Migrations
 
             modelBuilder.Entity("OfficeFlow.Models.Desk", b =>
                 {
-                    b.Navigation("ReservationArchives");
-
                     b.Navigation("Reservations");
                 });
 

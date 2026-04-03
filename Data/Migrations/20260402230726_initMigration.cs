@@ -6,10 +6,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace OfficeFlow.Migrations
+namespace OfficeFlow.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class NewMigration : Migration
+    public partial class initMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -166,9 +166,9 @@ namespace OfficeFlow.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     User_id = table.Column<int>(type: "integer", nullable: false),
                     Desk_id = table.Column<int>(type: "integer", nullable: false),
+                    reservationStatus = table.Column<int>(type: "integer", nullable: false),
                     Start_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     End_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    reservationStatus = table.Column<int>(type: "integer", nullable: false),
                     Created_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()"),
                     Updated_at = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "now()")
                 },
