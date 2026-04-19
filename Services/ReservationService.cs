@@ -115,6 +115,19 @@ namespace OfficeFlow.Services
             return availableTerms;
         }
 
+        public async Task<List<OfficeOccupancyView>> GetGlobalOccupancyAsync()
+        {
+            return await _context.Set<OfficeOccupancyView>().ToListAsync();
+        }
+
+        public async Task<List<UserReservationHistoryView>> GetUserHistory(int userId)
+        {
+            return await _context
+                .Set<UserReservationHistoryView>()
+                .Where(x => x.User_id == userId)
+                .ToListAsync();
+        }
+
         public async Task ArchiveOldReservationsAsync()
         {
             await _context.Database.ExecuteSqlRawAsync("CALL \"ArchiveOldReservations\"()");

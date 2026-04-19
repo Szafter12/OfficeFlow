@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using OfficeFlow.DTOs.Reservation;
 using OfficeFlow.Interfaces;
+using OfficeFlow.Models;
 
 namespace OfficeFlow.Controllers
 {
@@ -23,6 +24,32 @@ namespace OfficeFlow.Controllers
         {
             await _reservationService.ArchiveOldReservationsAsync();
             return Ok(new { message = "Archiving success" });
+        }
+
+        [HttpGet("occupancy")]
+        public async Task<ActionResult<List<OfficeOccupancyView>>> GetOfficeOccupancy()
+        {
+            var stats = await _reservationService.GetGlobalOccupancyAsync();
+
+            if (stats == null)
+            {
+                return NoContent();
+            }
+
+            return Ok(stats);
+        }
+
+        [HttpGet("{userId}/history")]
+        public async Task<ActionResult<List<UserReservationHistoryView>>> GetUserHistory(int userId)
+        {
+            var history = await _reservationService.GetUserHistory(userId);
+
+            if (history == null)
+            {
+                return Ok(new List<UserReservationHistoryView>());
+            }
+
+            return Ok(history);
         }
     }
 }

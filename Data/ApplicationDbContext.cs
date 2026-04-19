@@ -19,6 +19,13 @@ public class ApplicationDbContext : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder
+            .Entity<UserReservationHistoryView>()
+            .ToView("v_UserReservationHistory")
+            .HasNoKey();
+
+        modelBuilder.Entity<OfficeOccupancyView>().ToView("v_OfficeOccupancy").HasNoKey();
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         modelBuilder.Seed();
     }
