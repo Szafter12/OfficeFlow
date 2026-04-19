@@ -22,27 +22,47 @@ namespace OfficeFlow.Services
 
         public async Task<ReservationDto> CreateReservationAsync(ReservationDto dto)
         {
-            bool isAvailable = await IsDeskAvailable(dto.deskId, dto.startDate, dto.endDate);
+            using var transaction = await _context.Database.BeginTransactionAsync(
+                // Setting isolation level to serializable to prevent race condition
+                System.Data.IsolationLevel.Serializable
+            );
 
-            if (!isAvailable)
+            try
             {
+                bool isAvailable = await IsDeskAvailable(dto.deskId, dto.startDate, dto.endDate);
+
+                if (!isAvailable)
+                {
+                    throw new DeskUnavailableException();
+                }
+
+                double hours = (dto.endDate - dto.startDate).TotalHours;
+                decimal finalPrice = await CalculatePrice(dto.deskId, hours);
+
+                var newReservation = new Reservation
+                {
+                    User_id = dto.userId,
+                    Desk_id = dto.deskId,
+                    Start_date = dto.startDate,
+                    End_date = dto.endDate,
+                    final_price = finalPrice,
+                };
+
+                _context.Reservations.Add(newReservation);
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+
+                return dto with
+                {
+                    reservationId = newReservation.Id,
+                };
+            }
+            catch (Exception)
+            {
+                await transaction.RollbackAsync();
                 throw new DeskUnavailableException();
             }
-
-            var newReservation = new Reservation
-            {
-                User_id = dto.userId,
-                Desk_id = dto.deskId,
-                Start_date = dto.startDate,
-                End_date = dto.endDate,
-            };
-
-            _context.Reservations.Add(newReservation);
-            await _context.SaveChangesAsync();
-
-            var updateDto = dto with { reservationId = newReservation.Id };
-
-            return updateDto;
         }
 
         private async Task<bool> IsDeskAvailable(int deskId, DateTime start, DateTime end)
@@ -55,6 +75,20 @@ namespace OfficeFlow.Services
             );
 
             return !isCollision;
+        }
+
+        private async Task<decimal> CalculatePrice(int deskId, double hours)
+        {
+            var desk = await _context.Desks.FirstOrDefaultAsync(d => d.Id == deskId);
+
+            if (desk == null)
+            {
+                throw new KeyNotFoundException();
+            }
+
+            decimal pricePerHour = desk.Price;
+
+            return pricePerHour * (decimal)hours;
         }
     }
 }

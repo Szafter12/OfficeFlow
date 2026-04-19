@@ -25,7 +25,7 @@ Accept: application/json
 
 {
   "userId": 1,
-  "deskId": 0,
-  "startDate": "2026-05-15T08:00:00Z",
-  "endDate": "2026-05-15T07:00:00Z"
+  "deskId": 2,
+  "startDate": "2026-05-16T08:00:00Z",
+  "endDate": "2026-05-17T17:30:00Z"
 }
