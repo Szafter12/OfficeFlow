@@ -12,6 +12,5 @@ namespace OfficeFlow.Models
         public required string Last_name { get; set; } = string.Empty;
         public required string Email { get; set; } = string.Empty;
         public List<Reservation> Reservations { get; set; } = new();
-        public List<ReservationArchive> ReservationArchives { get; set; } = new();
     }
 }

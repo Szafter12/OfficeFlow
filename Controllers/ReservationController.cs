@@ -26,5 +26,15 @@ namespace OfficeFlow.Controllers
 
             return NoContent();
         }
+
+        [HttpGet("available-terms")]
+        public async Task<ActionResult<List<AvailableTermDto>>> GetAvailableTerms(
+            [FromQuery] int deskId,
+            [FromQuery] DateTime date
+        )
+        {
+            var terms = await _service.GetAvailableTermsAsync(deskId, date);
+            return Ok(terms);
+        }
     }
 }
