@@ -61,7 +61,7 @@ Instead of overloading the application with heavy LINQ queries, the project offl
 
 - v_UserReservationHistory: A flattened view for fast retrieval of user data without complex multi-table joins in C#.
 
-  ```
+  ```SQL
     CREATE VIEW v_UserReservationHistory AS
       SELECT 
         r."Id" AS ReservationId,
@@ -81,7 +81,7 @@ Instead of overloading the application with heavy LINQ queries, the project offl
 
 - Stored Procedures: * ArchiveOldReservations: A PL/pgSQL procedure that handles data lifecycle management by moving records older than 3 months to a history table via a single atomic call.
 
-  ```
+  ```SQL
   CREATE OR REPLACE PROCEDURE ArchiveOldReservations()
   LANGUAGE plpgsql
   AS $$
@@ -108,18 +108,18 @@ Integrated a custom Middleware that catches domain exceptions and maps them to a
 ## Some API Endpoints
 - Reservations
 Method	Endpoint	Description
-```
+```http
 POST	/api/reservations	Create a new desk reservation (Transaction-backed)
 GET	/api/reservation/available-terms?deskId=&date=	Fetch available time slots for a specific desk
 ```
 - Analytics & Admin
-```
+```http
 GET	/api/admin/{userId}/history	Retrieve full history from the v_UserHistory view
 GET	/api/admin/occupancy	Get real-time office occupancy via SQL View
 POST	/api/admin/archive	Manually trigger the SQL Archive Procedure
 ```
 - Offices & Desks
-```
+```http
 Method	Endpoint	Description
 GET	/api/offices	List all available locations
 POST	/api/offices	Add a new office with jsonb opening hours
