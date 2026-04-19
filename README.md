@@ -18,6 +18,9 @@ SpaceFlow is a comprehensive backend system for managing coworking spaces, desk 
 
 - Middleware: Global exception handling and performance tracking.
 
+## Database diagram
+![DB diagram](OfficeFlow reservations.png)
+
 ## Key Technical Features
 
 Advanced Database Consistency (Transactions & Isolation)
