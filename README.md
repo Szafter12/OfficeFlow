@@ -35,9 +35,71 @@ Instead of overloading the application with heavy LINQ queries, the project offl
 
 - PostgreSQL Views: * v_OfficeOccupancy: Real-time calculation of office capacity using jsonb opening hours.
 
+  ```
+  CREATE VIEW v_OfficeOccupancy AS
+    SELECT 
+        o."Id" AS OfficeId,
+        o."Name" AS OfficeName,
+        COUNT(d."Id") AS TotalDesks,
+        (SELECT COUNT(*) 
+         FROM "Reservations" r 
+         JOIN "Desks" d2 ON r."Desk_id" = d2."Id"
+         WHERE d2."OfficeId" = o."Id" 
+           AND r."reservationStatus" != 2
+           AND CURRENT_TIMESTAMP BETWEEN r."Start_date" AND r."End_date"
+        ) AS CurrentlyOccupied,
+        ROUND(
+            (SELECT COUNT(*) FROM "Reservations" r JOIN "Desks" d2 ON r."Desk_id" = d2."Id" 
+             WHERE d2."OfficeId" = o."Id" AND r."reservationStatus" != 2 
+             AND CURRENT_TIMESTAMP BETWEEN r."Start_date" AND r."End_date")::decimal / 
+            NULLIF(COUNT(d."Id"), 0)::decimal * 100, 2
+        ) AS OccupancyRate
+    FROM "Offices" o
+    LEFT JOIN "Desks" d ON o."Id" = d."OfficeId"
+    GROUP BY o."Id", o."Name";
+  ```
+
 - v_UserReservationHistory: A flattened view for fast retrieval of user data without complex multi-table joins in C#.
 
+  ```
+    CREATE VIEW v_UserReservationHistory AS
+      SELECT 
+        r."Id" AS ReservationId,
+        r."User_id",
+        u."FullName",
+        d."Number" AS DeskNumber,
+        o."Name" AS OfficeName,
+        r."Start_date",
+        r."End_date",
+        r."final_price",
+        EXTRACT(EPOCH FROM (r."End_date" - r."Start_date")) / 3600 AS DurationHours
+    FROM "Reservations" r
+    JOIN "Users" u ON r."User_id" = u."Id"
+    JOIN "Desks" d ON r."Desk_id" = d."Id"
+    JOIN "Offices" o ON d."OfficeId" = o."Id";
+  ```
+
 - Stored Procedures: * ArchiveOldReservations: A PL/pgSQL procedure that handles data lifecycle management by moving records older than 3 months to a history table via a single atomic call.
+
+  ```
+  CREATE OR REPLACE PROCEDURE ArchiveOldReservations()
+  LANGUAGE plpgsql
+  AS $$
+  BEGIN
+    INSERT INTO "ReservationsHistory" (
+        "Id", "User_id", "Desk_id", "Start_date", "End_date", "Created_at", "Updated_at", "TotalPrice"
+    )
+    SELECT 
+        "Id", "User_id", "Desk_id", "Start_date", "End_date", "Created_at", "Updated_at", "final_price"
+    FROM "Reservations"
+    WHERE "End_date" < CURRENT_DATE - INTERVAL '3 months';
+
+    -- 2. Usuwanie z głównej tabeli
+    DELETE FROM "Reservations"
+    WHERE "End_date" < CURRENT_DATE - INTERVAL '3 months';
+  END;
+  $$;
+  ```
 
 ## Global Exception Handling
 
