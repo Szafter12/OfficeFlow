@@ -35,7 +35,7 @@ Instead of overloading the application with heavy LINQ queries, the project offl
 
 - PostgreSQL Views: * v_OfficeOccupancy: Real-time calculation of office capacity using jsonb opening hours.
 
-  ```
+  ```SQL
   CREATE VIEW v_OfficeOccupancy AS
     SELECT 
         o."Id" AS OfficeId,
