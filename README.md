@@ -2,24 +2,21 @@
 
 SpaceFlow is a comprehensive backend system for managing coworking spaces, desk reservations, and office analytics. This project was developed as a hands-on consolidation of knowledge from the Microsoft Backend Development Course, focusing on building scalable, maintainable, and robust enterprise-grade APIs using .NET 9/10 and PostgreSQL.
 
-The primary goal of this repository is to demonstrate mastery over the full development lifecycle: from SQL architecture and database optimization to advanced C# logic and API security.
-Architectural Structure
-
 The project follows a clean, decoupled architecture to ensure "Separation of Concerns":
 
-    Controllers: Handle HTTP requests and manage API routing.
+- Controllers: Handle HTTP requests and manage API routing.
 
-    Services: Contain the core business logic (The "Heart" of the app).
+- Services: Contain the core business logic (The "Heart" of the app).
 
-    Interfaces: Define contracts, allowing for easy testing and Dependency Injection.
+- Interfaces: Define contracts, allowing for easy testing and Dependency Injection.
 
-    DTOs: Using C# records for immutable data transfer between layers.
+- DTOs: Using C# records for immutable data transfer between layers.
 
-    Models: Entity Framework Core entities representing the database schema.
+- Models: Entity Framework Core entities representing the database schema.
 
-    Exceptions: Custom domain-specific exceptions for granular error handling.
+- Exceptions: Custom domain-specific exceptions for granular error handling.
 
-    Middleware: Global exception handling and performance tracking.
+- Middleware: Global exception handling and performance tracking.
 
 ## Key Technical Features
 
