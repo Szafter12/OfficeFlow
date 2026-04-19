@@ -29,3 +29,8 @@ Accept: application/json
   "startDate": "2026-05-16T08:00:00Z",
   "endDate": "2026-05-17T17:30:00Z"
 }
+
+###
+
+GET {{OfficeFlow_HostAddress}}/api/reservation/available-terms?deskId=2&date=2026-05-19T15:00:00Z
+Accept: application/json

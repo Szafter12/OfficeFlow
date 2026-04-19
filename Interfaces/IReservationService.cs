@@ -9,5 +9,7 @@ namespace OfficeFlow.Interfaces
     public interface IReservationService
     {
         Task<ReservationDto> CreateReservationAsync(ReservationDto dto);
+        Task<List<AvailableTermDto>> GetAvailableTermsAsync(int deskId, DateTime date);
+        Task ArchiveOldReservationsAsync();
     }
 }

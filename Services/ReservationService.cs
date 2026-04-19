@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using OfficeFlow.DTOs.Reservation;
@@ -63,6 +64,60 @@ namespace OfficeFlow.Services
                 await transaction.RollbackAsync();
                 throw new DeskUnavailableException();
             }
+        }
+
+        public async Task<List<AvailableTermDto>> GetAvailableTermsAsync(int deskId, DateTime date)
+        {
+            var desk = await _context
+                .Desks.Include(d => d.Office)
+                .FirstOrDefaultAsync(d => d.Id == deskId);
+
+            if (desk == null)
+                throw new Exception("Desk not found");
+
+            var hours = JsonSerializer.Deserialize<OpeningHours>(desk.Office.OpeningHours);
+            string todayHours = hours?.GetForDay(date.DayOfWeek) ?? "Closed";
+
+            if (todayHours == "Closed")
+                return new List<AvailableTermDto>();
+
+            var times = todayHours.Split('-');
+            var officeStart = date.Date.Add(TimeSpan.Parse(times[0]));
+            var officeEnd = date.Date.Add(TimeSpan.Parse(times[1]));
+
+            var takenReservations = await _context
+                .Reservations.Where(r =>
+                    r.Desk_id == deskId
+                    && r.reservationStatus != ReservationStatus.Canceled
+                    && r.Start_date < officeEnd
+                    && r.End_date > officeStart
+                )
+                .OrderBy(r => r.Start_date)
+                .ToListAsync();
+
+            var availableTerms = new List<AvailableTermDto>();
+            var currentCursor = officeStart;
+
+            foreach (var res in takenReservations)
+            {
+                if (res.Start_date > currentCursor)
+                {
+                    availableTerms.Add(new AvailableTermDto(currentCursor, res.Start_date));
+                }
+                currentCursor = res.End_date > currentCursor ? res.End_date : currentCursor;
+            }
+
+            if (currentCursor < officeEnd)
+            {
+                availableTerms.Add(new AvailableTermDto(currentCursor, officeEnd));
+            }
+
+            return availableTerms;
+        }
+
+        public async Task ArchiveOldReservationsAsync()
+        {
+            await _context.Database.ExecuteSqlRawAsync("CALL \"ArchiveOldReservations\"()");
         }
 
         private async Task<bool> IsDeskAvailable(int deskId, DateTime start, DateTime end)

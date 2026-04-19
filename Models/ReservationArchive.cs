@@ -14,7 +14,5 @@ namespace OfficeFlow.Models
         public DateTime End_date { get; set; }
         public DateTime Created_at { get; set; } = DateTime.UtcNow;
         public DateTime Updated_at { get; set; } = DateTime.UtcNow;
-        public User User { get; set; } = null!;
-        public Desk Desk { get; set; } = null!;
     }
 }

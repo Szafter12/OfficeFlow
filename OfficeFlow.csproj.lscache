@@ -58,6 +58,7 @@ TemporaryDependencyNodeTargetIdentifier=net10.0
 
 [sourceFiles]
 Controllers/
+ AdminController.cs
  AmenityController.cs
  DeskController.cs
  OfficeController.cs
@@ -84,7 +85,9 @@ DTOs/
  Office/
   OfficeAddressDto.cs
   OfficeDto.cs
- Reservation/ReservationDto.cs
+ Reservation/
+  AvailabeTermDto.cs
+  ReservationDto.cs
  User/UserDto.cs
 Enums/
  DeskStatus.cs
@@ -103,6 +106,7 @@ Models/
  Desk.cs
  Office.cs
  OfficeAddress.cs
+ OpeningHours.cs
  Reservation.cs
  ReservationArchive.cs
  User.cs
