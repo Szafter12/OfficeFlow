@@ -134,7 +134,7 @@ POST /api/offices	Add a new office with jsonb opening hours
 
 - Documentation: Swagger / OpenAPI
 
-- Tools: Docker (for DB hosting), Postman
+- Tools: pgAdmin, Postman
 
 ## Learning Outcomes
 
