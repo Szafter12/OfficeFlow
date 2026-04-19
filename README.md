@@ -33,7 +33,7 @@ SQL Optimization: Views & Procedures
 
 Instead of overloading the application with heavy LINQ queries, the project offloads complex calculations to the database:
 
-- PostgreSQL Views: * v_OfficeOccupancy: Real-time calculation of office capacity using jsonb opening hours.
+- PostgreSQL Views: v_OfficeOccupancy: Real-time calculation of office capacity using jsonb opening hours.
 
   ```SQL
   CREATE VIEW v_OfficeOccupancy AS
@@ -79,7 +79,7 @@ Instead of overloading the application with heavy LINQ queries, the project offl
     JOIN "Offices" o ON d."OfficeId" = o."Id";
   ```
 
-- Stored Procedures: * ArchiveOldReservations: A PL/pgSQL procedure that handles data lifecycle management by moving records older than 3 months to a history table via a single atomic call.
+- Stored Procedures: ArchiveOldReservations: A PL/pgSQL procedure that handles data lifecycle management by moving records older than 3 months to a history table via a single atomic call.
 
   ```SQL
   CREATE OR REPLACE PROCEDURE ArchiveOldReservations()
