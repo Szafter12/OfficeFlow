@@ -2,11 +2,11 @@
 
 SpaceFlow is a comprehensive backend system for managing coworking spaces, desk reservations, and office analytics. This project was developed as a hands-on consolidation of knowledge from the Microsoft Backend Development Course, focusing on building scalable, maintainable, and robust enterprise-grade APIs using .NET 9/10 and PostgreSQL.
 
-## The project follows a clean, decoupled architecture to ensure "Separation of Concerns":
+## The project follows a clean architecture to ensure "Separation of Concerns":
 
 - Controllers: Handle HTTP requests and manage API routing.
 
-- Services: Contain the core business logic (The "Heart" of the app).
+- Services: Contain the core business logic.
 
 - Interfaces: Define contracts, allowing for easy testing and Dependency Injection.
 
@@ -18,7 +18,7 @@ SpaceFlow is a comprehensive backend system for managing coworking spaces, desk 
 
 - Middleware: Global exception handling and performance tracking.
 
-## Database diagram
+## Database schema 
 ![DB diagram](DB_diagram.png)
 
 ## Key Technical Features
