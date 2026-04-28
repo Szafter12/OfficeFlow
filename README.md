@@ -1,5 +1,5 @@
-## **SpaceFlow** – Enterprise-Grade Coworking Management System
-SpaceFlow is a robust backend API designed to manage coworking spaces, desk reservations, and office analytics. It is a high-performance system built with **.NET 9/10** and **PostgreSQL**, focusing on scalability and data integrity.
+## **OfficeFlow** – Enterprise-Grade Coworking Management System
+OfficeFlow is a robust backend API designed to manage coworking spaces, desk reservations, and office analytics. It is a high-performance system built with **.NET 9/10** and **PostgreSQL**, focusing on scalability and data integrity.
 
 ### Aim 
 This project was developed as a hands-on consolidation of knowledge from the Microsoft Backend Development Course. The goal was to move beyond basic CRUD operations and implement "Separation of Concerns" using **Clean Architecture**, while tackling complex backend challenges like concurrency and database optimization.
