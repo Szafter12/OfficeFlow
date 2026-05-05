@@ -17,7 +17,7 @@ This project was developed as a hands-on consolidation of knowledge from the Mic
 * **Complex Query Performance:** Calculating real-time occupancy across multiple tables was resource-intensive.
     * **Solution:** Offloaded logic to the database by creating optimized **SQL Views** (`v_OfficeOccupancy`), reducing the overhead on the .NET application.
 
-### Setup or usage instructions
+### Setup
 1.  **Clone the repository:**
     ```bash
     git clone [https://github.com/Szafter12/OfficeFlow.git](https://github.com/Szafter12/OfficeFlow.git)
